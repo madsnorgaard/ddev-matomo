@@ -1,25 +1,23 @@
 [![tests](https://github.com/ddev/ddev-addon-template/actions/workflows/tests.yml/badge.svg)](https://github.com/ddev/ddev-addon-template/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2024.svg)
 
-# ddev-addon-template <!-- omit in toc -->
+# ddev-matomo <!-- omit in toc -->
 
 * [What is ddev-addon-template?](#what-is-ddev-addon-template)
 * [Components of the repository](#components-of-the-repository)
 * [Getting started](#getting-started)
 * [How to debug in Github Actions](#how-to-debug-tests-github-actions)
 
-## What is ddev-addon-template?
+## What is ddev-matomo?
 
-This repository is a template for providing [DDEV](https://ddev.readthedocs.io) add-ons and services.
-
-In DDEV addons can be installed from the command line using the `ddev get` command, for example, `ddev get ddev/ddev-redis` or `ddev get ddev/ddev-solr`.
-
-This repository is a quick way to get started. You can create a new repo from this one by clicking the template button in the top right corner of the page.
+ddev-matomo provides an integration with Matomo - the
+leading open-source analytics platform that gives you
+more than powerful analytics.
 
 ![template button](images/template-button.png)
 
 ## Components of the repository
 
-* The fundamental contents of the add-on service or other component. For example, in this template there is a [docker-compose.addon-template.yaml](docker-compose.addon-template.yaml) file.
+* The fundamental contents of the add-on service or other component. For example, in this template there is a [docker-compose.addon-template.yaml](docker-compose.matomo.yaml) file.
 * An [install.yaml](install.yaml) file that describes how to install the service or other component.
 * A test suite in [test.bats](tests/test.bats) that makes sure the service continues to work as expected.
 * [Github actions setup](.github/workflows/tests.yml) so that the tests run automatically when you push to the repository.
