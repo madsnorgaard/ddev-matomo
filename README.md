@@ -13,8 +13,6 @@ ddev-matomo provides an integration with Matomo - the
 leading open-source analytics platform that gives you
 more than powerful analytics.
 
-![template button](images/template-button.png)
-
 ## Components of the repository
 
 * The fundamental contents of the add-on service or other component. For example, in this template there is a [docker-compose.addon-template.yaml](docker-compose.matomo.yaml) file.
