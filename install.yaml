@@ -93,3 +93,10 @@ removal_actions:
 yaml_read_files:
 # someyaml: someyaml.yaml
 # otheryaml: someotheryaml.yaml
+
+hooks:
+  post-start:
+  - exec: echo "Need to create a database" ${MATOMO_CREATE_DATABASE} "dd"
+    service: db
+#  - exec: mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS some_new_database;"
+#    service: db

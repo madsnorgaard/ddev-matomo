@@ -2,10 +2,6 @@
 
 # ddev-matomo <!-- omit in toc -->
 
-* [What is ddev-addon-template?](#what-is-ddev-addon-template)
-* [Components of the repository](#components-of-the-repository)
-* [Getting started](#getting-started)
-* [How to debug in Github Actions](#how-to-debug-tests-github-actions)
 
 ## What is ddev-matomo?
 
@@ -17,4 +13,4 @@ more than powerful analytics.
 
 1. Install the plugin with `ddev get valthebald/ddev-matomo`
 2. Start (or restart) your project with `ddev start` or `ddev restart`
-3. Access http://matomo.<projectname>.ddev.site in your browser and follow the installation steps.
+3. Access https://matomo.\<projectname\>.ddev.site in your browser and follow the installation steps.
