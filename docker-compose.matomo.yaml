@@ -1,19 +1,18 @@
 #ddev-generated
-
 services:
   matomo:
     image: matomo:latest
     container_name: ddev-${DDEV_SITENAME}-matomo
     environment:
-      HTTP_EXPOSE: 80
+      HTTPS_EXPOSE: 80
+      #      HTTP_EXPOSE: 80
       VIRTUAL_HOST: matomo.$DDEV_HOSTNAME
       MATOMO_DATABASE_HOST: db
       MATOMO_DATABASE_USERNAME: db
       MATOMO_DATABASE_PASSWORD: db
-      MATOMO_DATABASE_DBNAME: db
+      MATOMO_DATABASE_DBNAME: matomo
     labels:
-      traefik.enable: true
-      traefik.http.routers.matomo.rule: "Host(`matomo.${DDEV_HOSTNAME}`)"
-      traefik.http.services.matomo.loadbalancer.server.port: "80"
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
     external_links:
       - "ddev-router:${DDEV_SITENAME}.${DDEV_TLD}"
