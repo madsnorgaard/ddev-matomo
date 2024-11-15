@@ -4,8 +4,8 @@ services:
     image: matomo:latest
     container_name: ddev-${DDEV_SITENAME}-matomo
     environment:
-      HTTPS_EXPOSE: 80
-      #      HTTP_EXPOSE: 80
+      HTTPS_EXPOSE: 443:80
+      HTTP_EXPOSE: 80
       VIRTUAL_HOST: matomo.$DDEV_HOSTNAME
       MATOMO_DATABASE_HOST: db
       MATOMO_DATABASE_USERNAME: db
