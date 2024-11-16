@@ -5,4 +5,4 @@
 ## Usage: matomo-init
 ## Example: ddev matomo-init
 
-ddev import-db --file=.ddev/matomo-init.sql
+ddev import-db < .ddev/sql/matomo-init.sql
