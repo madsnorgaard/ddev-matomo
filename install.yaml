@@ -61,6 +61,7 @@ pre_install_actions:
 # by this add-on, or removal could remove things that are not owned by it
 project_files:
 - docker-compose.matomo.yaml
+- matomo-init.sql
 # - some-directory/file1.txt
 # - some-directory/file2.txt
 # - extra_files_dir_created_by_this_template/
@@ -78,7 +79,8 @@ dependencies:
 
 # DDEV environment variables can be interpolated into these actions
 post_install_actions:
-# - chmod +x ~/.ddev/commands/web/somecommand
+  - echo "Matomo add-on installed. You may want to check environment variables in .ddev/docker-compose.matomo.yaml and run `ddev matomo-init`"
+  - chmod +x ~/.ddev/commands/host/matomo-init
 # - touch somefile.${GOOS}.${DDEV_WEBSERVER}
 # - perl -pi -e 's/oldstring/newstring/g' docker-compose.matomo.yaml
 
@@ -93,10 +95,3 @@ removal_actions:
 yaml_read_files:
 # someyaml: someyaml.yaml
 # otheryaml: someotheryaml.yaml
-
-hooks:
-  post-start:
-  - exec: echo "Need to create a database" ${MATOMO_CREATE_DATABASE} "dd"
-    service: db
-#  - exec: mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS some_new_database;"
-#    service: db
