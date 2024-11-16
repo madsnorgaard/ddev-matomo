@@ -62,7 +62,7 @@ pre_install_actions:
 project_files:
 - docker-compose.matomo.yaml
 - matomo-init.sql
-# - some-directory/file1.txt
+- commands/host/matomo-init
 # - some-directory/file2.txt
 # - extra_files_dir_created_by_this_template/
 # - somefile.sh
