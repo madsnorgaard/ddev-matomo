@@ -1,5 +1,8 @@
 #ddev-generated
 services:
+  web:
+    external_links:
+      - "ddev-router:matomo.${DDEV_SITENAME}.${DDEV_TLD}"
   matomo:
     image: matomo:latest
     container_name: ddev-${DDEV_SITENAME}-matomo
@@ -11,8 +14,11 @@ services:
       MATOMO_DATABASE_USERNAME: db
       MATOMO_DATABASE_PASSWORD: db
       MATOMO_DATABASE_DBNAME: matomo
+      MATOMO_DATABASE_TABLES_PREFIX: ""
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
     external_links:
       - "ddev-router:${DDEV_SITENAME}.${DDEV_TLD}"
+    volumes:
+      - ./matomo/config:/var/www/html/config

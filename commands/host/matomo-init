@@ -1,8 +1,0 @@
-#!/bin/bash
-
-## #ddev-generated
-## Description: Create Matomo database
-## Usage: matomo-init
-## Example: ddev matomo-init
-
-ddev import-db < .ddev/sql/matomo-init.sql
