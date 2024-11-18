@@ -12,7 +12,6 @@ more than powerful analytics.
 ## Getting started
 
 1. Install the plugin with `ddev get valthebald/ddev-matomo`
-2. Start (or restart) your project with `ddev start` or `ddev restart`
-3. Review your database settings in .ddev/docker-compose.matomo.yaml
-4. Run `ddev matomo-init`
-5. Access https://matomo.\<projectname\>.ddev.site in your browser and follow the installation steps.
+2. Review your database settings in .ddev/docker-compose.matomo.yaml
+3. Create matomo database if needed with `echo "SHOW TABLES;" | ddev import-db --database=${MATOMO_DATABASE_DBNAME}`'
+4. Access https://matomo.\<projectname\>.ddev.site in your browser and follow the installation steps.

@@ -21,4 +21,6 @@ services:
     external_links:
       - "ddev-router:${DDEV_SITENAME}.${DDEV_TLD}"
     volumes:
+      # Persist configuration and plugin data (GeoIP DB etc.)
       - ./matomo/config:/var/www/html/config
+      - ./matomo/misc:/var/www/html/misc
