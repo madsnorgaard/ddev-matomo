@@ -3,9 +3,9 @@
 # ddev-matomo <!-- omit in toc -->
 
 
-## What is ddev-matomo?
+## What is DDEV Matomo?
 
-ddev-matomo provides an integration with Matomo - the
+This provides an integration with Matomo - the
 leading open-source analytics platform that gives you
 more than powerful analytics.
 
@@ -14,4 +14,5 @@ more than powerful analytics.
 1. Install the plugin with `ddev get valthebald/ddev-matomo`
 2. Review your database settings in .ddev/docker-compose.matomo.yaml
 3. Create matomo database if needed with `echo "SHOW TABLES;" | ddev import-db --database=${MATOMO_DATABASE_DBNAME}`'
-4. Access https://matomo.\<projectname\>.ddev.site in your browser and follow the installation steps.
+4. Restart DDEV to install DDEV Matomo with `ddev restart`
+5. Access https://matomo.\<projectname\>.ddev.site in your browser and follow the installation steps
