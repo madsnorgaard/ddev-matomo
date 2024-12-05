@@ -5,7 +5,7 @@
 
 ## What is ddev-matomo?
 
-This provides an integration with Matomo - the
+ddev-matomo provides an integration with Matomo - the
 leading open-source analytics platform that gives you
 more than powerful analytics.
 
