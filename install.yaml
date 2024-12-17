@@ -80,17 +80,17 @@ dependencies:
 
 # DDEV environment variables can be interpolated into these actions
 post_install_actions:
-  - mkdir -p .ddev/matomo/config
   - echo "Matomo add-on installed. Next steps:"
   - echo "1. Check environment variables in .ddev/docker-compose.matomo.yaml"
-  - echo '2. Create matomo database if needed with `echo "SHOW TABLES;" | ddev import-db --database=${MATOMO_DATABASE_DBNAME}`'
-  - echo "3. Install matomo by visiting https://matomo.<yourproject>.ddev.site"
+  - echo '2. Create matomo database if needed with echo "SHOW TABLES;" | ddev import-db --database=${MATOMO_DATABASE_DBNAME}`'
+  - echo '3. Restart ddev with `ddev restart`'
+  - echo "4. Install matomo by visiting https://matomo.<yourproject>.ddev.site"
 # - touch somefile.${GOOS}.${DDEV_WEBSERVER}
 # - perl -pi -e 's/oldstring/newstring/g' docker-compose.matomo.yaml
 
 # Shell actions that can be done during removal of the add-on
 removal_actions:
-# - rm ~/.ddev/commands/web/somecommand
+  - rm -rf .ddev/matomo
 
 # Advanced usage - yaml files can be read in and then used as go template actions
 # in pre_install_actions and post_install_actions
