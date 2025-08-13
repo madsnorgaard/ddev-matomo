@@ -12,14 +12,11 @@ pre_install_actions:
     #ddev-description:Create Matomo directories and gitkeep files
     mkdir -p .ddev/matomo/config
     mkdir -p .ddev/matomo/misc
-    mkdir -p .ddev/matomo/plugins
-    mkdir -p .ddev/matomo/tmp
     
     # Create .gitkeep files to maintain directory structure
     touch .ddev/matomo/.gitkeep
     touch .ddev/matomo/config/.gitkeep
     touch .ddev/matomo/misc/.gitkeep
-    touch .ddev/matomo/plugins/.gitkeep
   
   # Optional: Ask about Matomo version during installation
   - |
@@ -65,14 +62,9 @@ pre_install_actions:
       echo "# Matomo runtime files (auto-generated)" >> .ddev/.gitignore
       echo "matomo/config/*.php" >> .ddev/.gitignore
       echo "matomo/config/*.ini.php" >> .ddev/.gitignore
-      echo "matomo/tmp/" >> .ddev/.gitignore
       echo "matomo/misc/*.dat" >> .ddev/.gitignore
       echo "matomo/misc/*.mmdb" >> .ddev/.gitignore
       echo "matomo/misc/user/" >> .ddev/.gitignore
-      echo "matomo/plugins/*" >> .ddev/.gitignore
-      echo "!matomo/plugins/.gitkeep" >> .ddev/.gitignore
-      echo "matomo/logs/" >> .ddev/.gitignore
-      echo "matomo/cache/" >> .ddev/.gitignore
     fi
 
 # - "docker volume rm ddev-${DDEV_PROJECT}_solr 2>/dev/null || true"

@@ -49,11 +49,9 @@ services:
       - "ddev-router:${DDEV_SITENAME}.${DDEV_TLD}"
     
     volumes:
-      # Persist Matomo data across container restarts
+      # Persist essential Matomo data across container restarts
       - ./matomo/config:/var/www/html/config
       - ./matomo/misc:/var/www/html/misc
-      - ./matomo/plugins:/var/www/html/plugins
-      - ./matomo/tmp:/var/www/html/tmp
     
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/matomo.php"]

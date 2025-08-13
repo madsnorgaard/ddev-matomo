@@ -206,11 +206,24 @@ ddev exec -s matomo rm -f /var/www/html/config/config.ini.php
 ddev restart
 ```
 
+#### File Integrity Check Failed
+**Problem:** "File integrity check failed" with lists of directories and files to delete
+
+**Solution:** This was caused by mounting plugins directory in older versions. 
+1. Update to latest version: `ddev add-on get madsnorgaard/ddev-matomo`
+2. Or manually remove the volume mounts from `.ddev/docker-compose.matomo.yaml`:
+   ```yaml
+   # Remove these lines if present:
+   # - ./matomo/plugins:/var/www/html/plugins  
+   # - ./matomo/tmp:/var/www/html/tmp
+   ```
+3. Restart: `ddev restart`
+
 #### Wrong Database Used
 **Problem:** Matomo tables appearing in your application database
 
 **Solution:** 
-1. Check your database configuration in `.ddev/config.matomo.yaml`
+1. Check your database configuration in `.ddev/docker-compose.matomo.yaml`
 2. Ensure you're using `matomo` (or your custom name) as the database during Matomo setup
 3. Never use your application's database name for Matomo
 
