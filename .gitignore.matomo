@@ -1,0 +1,25 @@
+# Matomo runtime files that should not be committed
+# This file will be installed as .ddev/.gitignore if it doesn't exist
+# Or appended to existing .ddev/.gitignore
+
+# Matomo runtime data (auto-generated)
+/matomo/config/*.php
+/matomo/config/*.ini.php
+/matomo/config/config.ini.php
+/matomo/tmp/
+/matomo/misc/user/
+/matomo/misc/*.dat
+/matomo/misc/*.mmdb
+/matomo/plugins/*
+!/matomo/plugins/.gitkeep
+
+# Keep only the structure, not the data
+/matomo/logs/
+/matomo/cache/
+
+# But keep these for structure
+!/matomo/
+!/matomo/config/
+!/matomo/config/.gitkeep
+!/matomo/misc/
+!/matomo/misc/.gitkeep

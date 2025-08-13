@@ -14,6 +14,7 @@ ddev-matomo provides an integration with [Matomo](https://matomo.org/) - the lea
 - ✅ **Easy configuration** via environment variables
 - ✅ **Automatic HTTPS** with DDEV's router
 - ✅ **Persistent data** across project restarts
+- ✅ **Git-friendly** - Runtime files automatically ignored, safe for team development
 
 ## Getting started
 
@@ -152,6 +153,32 @@ For tracking multiple sites in one Matomo instance:
 2. Log into Matomo admin
 3. Go to Administration → Websites → Add a new website
 4. Configure each site with its tracking code
+
+### Git Integration
+
+The add-on automatically handles git integration for team development:
+
+**What gets committed:**
+- Directory structure (via `.gitkeep` files)
+- Configuration files (like `config.matomo.yaml`)
+- The docker-compose configuration
+
+**What gets ignored:**
+- Matomo runtime files (config.ini.php, cache, logs)
+- User data and plugins
+- Temporary files
+- GeoIP databases
+
+**Team Development:**
+```bash
+# New team member setup - just install and restart
+ddev add-on get madsnorgaard/ddev-matomo
+ddev restart
+
+# Matomo will recreate all runtime files automatically
+```
+
+The `.ddev/.gitignore` file is automatically created/updated during installation.
 
 ## Troubleshooting
 

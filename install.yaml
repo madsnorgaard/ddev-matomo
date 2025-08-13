@@ -9,12 +9,17 @@ name: matomo
 pre_install_actions:
   # Create necessary directories for Matomo data persistence
   - |
-    #ddev-description:Create Matomo directories
-    mkdir -p .ddev/matomo
+    #ddev-description:Create Matomo directories and gitkeep files
     mkdir -p .ddev/matomo/config
     mkdir -p .ddev/matomo/misc
     mkdir -p .ddev/matomo/plugins
     mkdir -p .ddev/matomo/tmp
+    
+    # Create .gitkeep files to maintain directory structure
+    touch .ddev/matomo/.gitkeep
+    touch .ddev/matomo/config/.gitkeep
+    touch .ddev/matomo/misc/.gitkeep
+    touch .ddev/matomo/plugins/.gitkeep
   
   # Check if config.matomo.yaml exists, if not create from template
   - |
@@ -24,6 +29,30 @@ pre_install_actions:
       echo "# You can customize Matomo settings here" > .ddev/config.matomo.yaml
       echo "MATOMO_VERSION: \"5\"" >> .ddev/config.matomo.yaml
       echo "MATOMO_DATABASE_DBNAME: \"matomo\"" >> .ddev/config.matomo.yaml
+    fi
+  
+  # Setup gitignore for Matomo files
+  - |
+    #ddev-description:Setup gitignore for Matomo runtime files
+    if [ ! -f .ddev/.gitignore ]; then
+      echo "# DDEV files that should not be committed" > .ddev/.gitignore
+      echo "" >> .ddev/.gitignore
+    fi
+    
+    # Add Matomo-specific ignores if not already present
+    if ! grep -q "# Matomo runtime files" .ddev/.gitignore 2>/dev/null; then
+      echo "" >> .ddev/.gitignore
+      echo "# Matomo runtime files (auto-generated)" >> .ddev/.gitignore
+      echo "matomo/config/*.php" >> .ddev/.gitignore
+      echo "matomo/config/*.ini.php" >> .ddev/.gitignore
+      echo "matomo/tmp/" >> .ddev/.gitignore
+      echo "matomo/misc/*.dat" >> .ddev/.gitignore
+      echo "matomo/misc/*.mmdb" >> .ddev/.gitignore
+      echo "matomo/misc/user/" >> .ddev/.gitignore
+      echo "matomo/plugins/*" >> .ddev/.gitignore
+      echo "!matomo/plugins/.gitkeep" >> .ddev/.gitignore
+      echo "matomo/logs/" >> .ddev/.gitignore
+      echo "matomo/cache/" >> .ddev/.gitignore
     fi
 
 # - "docker volume rm ddev-${DDEV_PROJECT}_solr 2>/dev/null || true"
@@ -72,6 +101,8 @@ pre_install_actions:
 project_files:
 - docker-compose.matomo.yaml
 - config.matomo.yaml.example
+- .gitignore.matomo
+- .gitkeep.matomo
 
 # List of files and directories that are copied into the global .ddev directory
 # DDEV environment variables can be interpolated into these filenames
@@ -114,6 +145,11 @@ post_install_actions:
     echo "📝 Configuration:"
     echo "   To customize Matomo (version, PHP settings, etc.),"
     echo "   edit: .ddev/config.matomo.yaml"
+    echo ""
+    echo "🗂️  Git Integration:"
+    echo "   • Runtime files automatically excluded from git"
+    echo "   • Directory structure preserved with .gitkeep files"
+    echo "   • Safe for team development and CI/CD"
     echo ""
     echo "📚 Documentation:"
     echo "   https://github.com/madsnorgaard/ddev-matomo"
