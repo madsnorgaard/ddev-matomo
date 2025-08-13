@@ -1,26 +1,62 @@
 #ddev-generated
+# DDEV Matomo Add-on
+# 
+# To customize Matomo configuration, create .ddev/config.matomo.yaml
+# See https://github.com/madsnorgaard/ddev-matomo for documentation
+
 services:
   web:
     external_links:
       - "ddev-router:matomo.${DDEV_SITENAME}.${DDEV_TLD}"
+  
   matomo:
-    image: matomo:latest
+    # Matomo version can be configured in .ddev/config.matomo.yaml
+    # Default: "5" (latest Matomo 5.x)
+    # Options: "5", "4", "5.1.2", "4.15.1", etc.
+    image: matomo:${MATOMO_VERSION:-5}
     container_name: ddev-${DDEV_SITENAME}-matomo
     environment:
+      # DDEV routing configuration
       HTTPS_EXPOSE: 443:80
       HTTP_EXPOSE: 80
       VIRTUAL_HOST: matomo.$DDEV_HOSTNAME
+      
+      # Database configuration
+      # Uses separate database to avoid conflicts with application database
       MATOMO_DATABASE_HOST: db
       MATOMO_DATABASE_USERNAME: db
       MATOMO_DATABASE_PASSWORD: db
-      MATOMO_DATABASE_DBNAME: matomo
-      MATOMO_DATABASE_TABLES_PREFIX: ""
+      MATOMO_DATABASE_DBNAME: ${MATOMO_DATABASE_DBNAME:-matomo}
+      MATOMO_DATABASE_TABLES_PREFIX: ${MATOMO_DATABASE_TABLES_PREFIX:-matomo_}
+      
+      # PHP configuration (optional, with defaults)
+      PHP_MEMORY_LIMIT: ${MATOMO_PHP_MEMORY_LIMIT:-256M}
+      PHP_MAX_EXECUTION_TIME: ${MATOMO_PHP_MAX_EXECUTION_TIME:-300}
+      PHP_POST_MAX_SIZE: ${MATOMO_PHP_POST_MAX_SIZE:-16M}
+      PHP_UPLOAD_MAX_FILESIZE: ${MATOMO_PHP_UPLOAD_MAX_FILESIZE:-16M}
+      
+      # Matomo configuration (optional)
+      MATOMO_GENERAL_ENABLE_TRUSTED_HOST_CHECK: ${MATOMO_GENERAL_ENABLE_TRUSTED_HOST_CHECK:-0}
+      MATOMO_GENERAL_ASSUME_SECURE_PROTOCOL: ${MATOMO_GENERAL_ASSUME_SECURE_PROTOCOL:-1}
+      MATOMO_GENERAL_ENABLE_BROWSER_ARCHIVING_TRIGGERING: ${MATOMO_GENERAL_ENABLE_BROWSER_ARCHIVING_TRIGGERING:-1}
+    
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
+    
     external_links:
       - "ddev-router:${DDEV_SITENAME}.${DDEV_TLD}"
+    
     volumes:
-      # Persist configuration and plugin data (GeoIP DB etc.)
+      # Persist Matomo data across container restarts
       - ./matomo/config:/var/www/html/config
       - ./matomo/misc:/var/www/html/misc
+      - ./matomo/plugins:/var/www/html/plugins
+      - ./matomo/tmp:/var/www/html/tmp
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/matomo.php"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
