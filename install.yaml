@@ -18,35 +18,6 @@ pre_install_actions:
     touch .ddev/matomo/config/.gitkeep
     touch .ddev/matomo/misc/.gitkeep
   
-  # Optional: Ask about Matomo version during installation
-  - |
-    #ddev-description:Configure Matomo version
-    echo ""
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    echo "📋 Matomo Version Configuration"
-    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-    echo ""
-    echo "Choose Matomo version:"
-    echo "1) Matomo 5 (latest - recommended)"
-    echo "2) Matomo 4 (LTS - until Nov 2025)"
-    echo "3) Keep default (Matomo 5)"
-    echo ""
-    
-    read -p "Enter choice (1-3) or press Enter for default: " matomo_choice
-    
-    case "${matomo_choice:-3}" in
-        1)
-            sed -i 's/image: matomo:.*/image: matomo:5/' .ddev/docker-compose.matomo.yaml
-            echo "✓ Set to Matomo 5 (latest)"
-            ;;
-        2)
-            sed -i 's/image: matomo:.*/image: matomo:4/' .ddev/docker-compose.matomo.yaml
-            echo "✓ Set to Matomo 4 (LTS)"
-            ;;
-        *)
-            echo "✓ Using default Matomo 5"
-            ;;
-    esac
   
   # Setup gitignore for Matomo files
   - |
@@ -126,6 +97,35 @@ dependencies:
 
 # DDEV environment variables can be interpolated into these actions
 post_install_actions:
+  - |
+    #ddev-description:Configure Matomo version
+    echo ""
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "📋 Matomo Version Configuration"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "Choose Matomo version:"
+    echo "1) Matomo 5 (latest - recommended)"
+    echo "2) Matomo 4 (LTS - until Nov 2025)"
+    echo "3) Keep default (Matomo 5)"
+    echo ""
+    
+    read -p "Enter choice (1-3) or press Enter for default: " matomo_choice
+    
+    case "${matomo_choice:-3}" in
+        1)
+            sed -i 's/image: matomo:.*/image: matomo:5/' .ddev/docker-compose.matomo.yaml
+            echo "✓ Set to Matomo 5 (latest)"
+            ;;
+        2)
+            sed -i 's/image: matomo:.*/image: matomo:4/' .ddev/docker-compose.matomo.yaml
+            echo "✓ Set to Matomo 4 (LTS)"
+            ;;
+        *)
+            echo "✓ Using default Matomo 5"
+            ;;
+    esac
+
   - |
     #ddev-description:Create Matomo database
     echo "Creating Matomo database..."
