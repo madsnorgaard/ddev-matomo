@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-01-13
+
+### Fixed
+- **CRITICAL**: Fixed environment variable loading issues with DDEV
+- Removed dependency on external config files that DDEV doesn't load automatically
+- Now uses proper DDEV docker-compose environment variable patterns
+
+### Added
+- Interactive installation with version selection prompts
+- `configure-matomo.sh` script for easy post-install configuration
+- Comprehensive git integration with automatic .gitignore setup
+- Clear documentation for all configuration methods
+
+### Changed
+- Simplified configuration approach using direct docker-compose editing
+- Updated documentation to reflect proper DDEV practices
+- Enhanced installation messages with better guidance
+
+### Removed
+- `config.matomo.yaml` approach (didn't work with DDEV's environment system)
+
 ## [1.0.0] - 2025-01-13
 
 ### Added
