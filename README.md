@@ -32,29 +32,17 @@ ddev restart
    ddev add-on get madsnorgaard/ddev-matomo
    ```
 
-2. **Configure your Matomo version** (optional - defaults to Matomo 5)
-   Create or edit `.ddev/config.matomo.yaml`:
-   ```yaml
-   # For Matomo 5 (latest):
-   MATOMO_VERSION: "5"
-   
-   # For Matomo 4 (LTS):
-   # MATOMO_VERSION: "4"
-   ```
+2. **Configure Matomo version** (optional - you'll be prompted during installation)
+   - Choose during installation, or
+   - Run `.ddev/configure-matomo.sh` later, or  
+   - Edit `.ddev/docker-compose.matomo.yaml` directly
 
-3. **Configure database settings** (optional - defaults are safe)
-   The add-on creates a separate database named `matomo` by default. To customize:
-   ```yaml
-   # In .ddev/config.matomo.yaml
-   MATOMO_DATABASE_DBNAME: "matomo"  # Change if needed
-   ```
-
-4. **Restart DDEV**
+3. **Restart DDEV**
    ```bash
    ddev restart
    ```
 
-5. **Complete Matomo setup**
+4. **Complete Matomo setup**
    - Visit https://matomo.\<projectname\>.ddev.site
    - Follow the installation wizard
    - Database settings (use these during setup):
@@ -111,12 +99,20 @@ ddev import-db --database=matomo --file=matomo-backup.sql
 
 ### How to Change Versions
 
-Edit `.ddev/config.matomo.yaml`:
+**Option 1: Configuration Script (Recommended)**
+```bash
+.ddev/configure-matomo.sh
+```
+
+**Option 2: Manual Edit**
+Edit `.ddev/docker-compose.matomo.yaml`:
 ```yaml
-# For specific versions:
-MATOMO_VERSION: "5.1.2"  # Specific version
-MATOMO_VERSION: "5"      # Latest 5.x
-MATOMO_VERSION: "4"      # Latest 4.x
+# Change this line:
+image: matomo:5
+
+# To (examples):
+image: matomo:4      # Latest 4.x
+image: matomo:5.1.2  # Specific version
 ```
 
 Then restart:
@@ -126,25 +122,33 @@ ddev restart
 
 ## Advanced Configuration
 
-### Environment Variables
+### Docker Compose Configuration
 
-All configuration is done via `.ddev/config.matomo.yaml`:
+All settings are configured in `.ddev/docker-compose.matomo.yaml`. You can edit values directly:
 
 ```yaml
-# Matomo version
-MATOMO_VERSION: "5"
-
-# Database configuration
-MATOMO_DATABASE_DBNAME: "matomo"
-
-# PHP settings (optional)
-MATOMO_PHP_MEMORY_LIMIT: "256M"
-MATOMO_PHP_MAX_EXECUTION_TIME: "300"
-
-# Matomo settings (optional)
-MATOMO_GENERAL_ENABLE_TRUSTED_HOST_CHECK: "0"
-MATOMO_GENERAL_ASSUME_SECURE_PROTOCOL: "1"
+services:
+  matomo:
+    # Change Matomo version here
+    image: matomo:5
+    
+    environment:
+      # Database settings
+      MATOMO_DATABASE_DBNAME: matomo
+      MATOMO_DATABASE_TABLES_PREFIX: matomo_
+      
+      # PHP settings
+      PHP_MEMORY_LIMIT: 256M
+      PHP_MAX_EXECUTION_TIME: 300
+      PHP_POST_MAX_SIZE: 16M
+      PHP_UPLOAD_MAX_FILESIZE: 16M
+      
+      # Matomo settings
+      MATOMO_GENERAL_ENABLE_TRUSTED_HOST_CHECK: 0
+      MATOMO_GENERAL_ASSUME_SECURE_PROTOCOL: 1
 ```
+
+After editing, run `ddev restart`.
 
 ### Multi-site Setup
 
