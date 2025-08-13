@@ -1,4 +1,4 @@
-[![tests](https://github.com/madsnorgaard/ddev-matomo/actions/workflows/tests.yml/badge.svg)](https://github.com/madsnorgaard/ddev-matomo/actions/workflows/tests.yml) ![project is maintained](https://img.shields.io/maintenance/yes/2025.svg)
+![project is maintained](https://img.shields.io/maintenance/yes/2025.svg)
 
 # ddev-matomo <!-- omit in toc -->
 
