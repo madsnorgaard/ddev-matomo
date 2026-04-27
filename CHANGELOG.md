@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-04-27
+
+### Added
+- `tests/test.bats` integration test covering install, restart, container health, database isolation, and removal
+- `.github/workflows/tests.yml` CI running `ddev/github-action-add-on-test@v2` on pushes, PRs, and a daily schedule against both `stable` and `HEAD` DDEV
+- `ddev_version_constraint: '>= v1.24.10'` in `install.yaml` so older DDEV versions fail fast with a clear message
+- README badge for the tests workflow
+
+### Changed
+- Healthcheck endpoint switched from `/matomo.php` (returns 400 before setup) to `/index.php` (returns 200 once Apache is ready) so a fresh install no longer reports unhealthy
+- README rewritten to reflect Matomo 4.x EOL since 2024-12-19; pin guidance now uses 5.9.0 as the example
+- MariaDB compatibility note added for users overriding DDEV's defaults (avoid 11.5.x)
+
+### Removed
+- Matomo 4.x as an offered option in `configure-matomo.sh` — 4.x is end-of-life and shouldn't be promoted to new users
+- Stale `.gitignore.matomo` and `.gitkeep.matomo` files (the equivalent gitignore is generated inline by `pre_install_actions`)
+
+## [1.1.3] - 2025-08-13
+
+### Fixed
+- Removed remaining interactive prompts from the install flow so `ddev add-on get` runs cleanly in CI and non-interactive shells
+- Version configuration moved entirely to the post-install `configure-matomo.sh` script
+
+## [1.1.2] - 2025-08-13
+
+### Fixed
+- Removed the plugins volume mount that triggered Matomo's file integrity check failure on first boot
+
 ## [1.1.1] - 2025-01-13
 
 ### Fixed
