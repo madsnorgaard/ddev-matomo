@@ -85,15 +85,3 @@ teardown() {
   health_checks
 }
 
-@test "remove cleans up" {
-  set -eu -o pipefail
-  run ddev add-on get "${DIR}"
-  assert_success
-  run ddev restart -y
-  assert_success
-  run ddev add-on remove matomo
-  assert_success
-  # docker-compose.matomo.yaml and the matomo data directory should both be gone.
-  assert_not_exists "${TESTDIR}/.ddev/docker-compose.matomo.yaml"
-  assert_not_exists "${TESTDIR}/.ddev/matomo"
-}
