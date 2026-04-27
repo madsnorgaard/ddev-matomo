@@ -1,4 +1,5 @@
-![project is maintained](https://img.shields.io/maintenance/yes/2025.svg)
+![project is maintained](https://img.shields.io/maintenance/yes/2026.svg)
+[![tests](https://github.com/madsnorgaard/ddev-matomo/actions/workflows/tests.yml/badge.svg)](https://github.com/madsnorgaard/ddev-matomo/actions/workflows/tests.yml)
 
 # ddev-matomo <!-- omit in toc -->
 
@@ -10,7 +11,7 @@ ddev-matomo provides an integration with [Matomo](https://matomo.org/) - the lea
 ## Features
 
 - ✅ **Separate database** for Matomo (prevents conflicts with your application database)
-- ✅ **Version flexibility** - Choose between Matomo 4.x or 5.x
+- ✅ **Tracks current Matomo 5.x** (rolling `matomo:5` tag, pin to a specific version when needed)
 - ✅ **Easy configuration** via environment variables
 - ✅ **Automatic HTTPS** with DDEV's router
 - ✅ **Persistent data** across project restarts
@@ -43,7 +44,7 @@ ddev restart
    ```
 
 4. **Complete Matomo setup**
-   - Visit https://matomo.\<projectname\>.ddev.site
+   - Visit `https://matomo.<projectname>.ddev.site`
    - Follow the installation wizard
    - Database settings (use these during setup):
      - Database Server: `db`
@@ -94,12 +95,14 @@ ddev import-db --database=matomo --file=matomo-backup.sql
 
 | Matomo Version | Support Status | Use Case |
 |---------------|----------------|----------|
-| **5.x** (default) | Latest features | Recommended for new installations |
-| **4.x** | LTS until Nov 2025 | For compatibility with older plugins |
+| **5.x** (default) | Active development | Recommended for all installations |
+| **4.x** | EOL since 2024-12-19 | Not supported - see Matomo's [LTS policy](https://matomo.org/faq/on-premise/matomo-long-term-support-lts/) |
 
-### How to Change Versions
+Matomo 4.x reached end of life in December 2024 and no longer receives security updates. This add-on tracks the `matomo:5` Docker tag by default. Pinning to a 4.x tag still technically works but is strongly discouraged.
 
-**Option 1: Configuration Script (Recommended)**
+### How to Pin a Specific Version
+
+**Option 1: Configuration Script**
 ```bash
 .ddev/configure-matomo.sh
 ```
@@ -107,18 +110,19 @@ ddev import-db --database=matomo --file=matomo-backup.sql
 **Option 2: Manual Edit**
 Edit `.ddev/docker-compose.matomo.yaml`:
 ```yaml
-# Change this line:
+# Default - rolling latest 5.x
 image: matomo:5
 
-# To (examples):
-image: matomo:4      # Latest 4.x
-image: matomo:5.1.2  # Specific version
+# Or pin to a specific release
+image: matomo:5.9.0
 ```
 
 Then restart:
 ```bash
 ddev restart
 ```
+
+> **MariaDB note:** This add-on is tested against DDEV's default databases (MariaDB 10.11 and 11.4). Avoid MariaDB 11.5.x — it has a [known incompatibility](https://forum.matomo.org/t/weve-found-a-compatibility-issue-with-mariadb-11-5-2-and-matomo-5-1/59590) with Matomo 5.1+.
 
 ## Advanced Configuration
 
@@ -252,9 +256,9 @@ This is a community-maintained fork of the original ddev-matomo add-on. The orig
 This fork aims to:
 - ✅ Keep the add-on updated with latest Matomo and DDEV versions
 - ✅ Provide clear database isolation to prevent data loss
-- ✅ Support both Matomo 4.x (LTS) and 5.x versions
+- ✅ Track the supported Matomo 5.x line
 - ✅ Improve documentation for the community
-- ✅ Fix known issues and compatibility problems
+- ✅ Run automated tests on every change against current and HEAD DDEV
 
 ### Contributing
 

@@ -42,26 +42,23 @@ echo -e "${YELLOW}Current Matomo version:${NC} $current_version"
 echo
 
 # Version selection
+# Matomo 4.x is end-of-life since 2024-12-19 and is intentionally not offered as an option.
 echo "Select Matomo version:"
-echo "1) Matomo 5 (latest - recommended)"
-echo "2) Matomo 4 (LTS - until Nov 2025)"
-echo "3) Specific version (e.g., 5.1.2, 4.15.1)"
-echo "4) Keep current version ($current_version)"
+echo "1) Matomo 5 (rolling latest - recommended)"
+echo "2) Specific 5.x version (e.g., 5.9.0)"
+echo "3) Keep current version ($current_version)"
 echo
 
-read -p "Enter choice (1-4): " version_choice
+read -p "Enter choice (1-3): " version_choice
 
 case $version_choice in
     1)
         new_version="5"
         ;;
     2)
-        new_version="4"
+        read -p "Enter specific version (e.g., 5.9.0): " new_version
         ;;
     3)
-        read -p "Enter specific version (e.g., 5.1.2): " new_version
-        ;;
-    4)
         new_version="$current_version"
         echo -e "${GREEN}Keeping current version: $current_version${NC}"
         ;;

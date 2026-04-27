@@ -10,10 +10,9 @@ services:
       - "ddev-router:matomo.${DDEV_SITENAME}.${DDEV_TLD}"
   
   matomo:
-    # Matomo version can be configured during installation or by editing this file
-    # Default: "5" (latest Matomo 5.x)
-    # To change version: edit this line and run 'ddev restart'
-    # Options: "5", "4", "5.1.2", "4.15.1", etc.
+    # Default: "matomo:5" (rolling tag for latest Matomo 5.x)
+    # To pin to a specific version, e.g. "matomo:5.9.0", edit this line and run 'ddev restart'.
+    # Matomo 4.x is end-of-life since 2024-12-19 and is not supported by this add-on.
     image: matomo:5
     container_name: ddev-${DDEV_SITENAME}-matomo
     environment:
@@ -54,7 +53,10 @@ services:
       - ./matomo/misc:/var/www/html/misc
     
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/matomo.php"]
+      # /index.php returns 200 once Apache + PHP are up (the install wizard or main app).
+      # /matomo.php is the tracking endpoint and returns 400 on a fresh install,
+      # which would falsely mark the container unhealthy before setup is complete.
+      test: ["CMD", "curl", "-fs", "http://localhost/index.php"]
       interval: 30s
       timeout: 10s
       retries: 3

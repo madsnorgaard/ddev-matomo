@@ -2,6 +2,9 @@
 
 name: matomo
 
+# Minimum DDEV version. v1.24.10 introduced the constraint operators we rely on.
+ddev_version_constraint: '>= v1.24.10'
+
 # pre_install_actions - list of actions to run before installing the addon.
 # Examples would be removing an extraneous docker volume,
 # or doing a sanity check for requirements.
